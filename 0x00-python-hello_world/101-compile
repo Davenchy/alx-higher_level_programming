@@ -1,6 +1,2 @@
-#!/usr/bin/python3
-from py_compile import compile
-from os import environ
-name = environ["PYFILE"]
-print(f"Compiling {name} ...")
-compile(name, f"{name}c")
+#!/bin/bash
+echo "Compiling $PYFILE ..." && python3 -m py_compile $PYFILE && mv __pycache__/*.pyc "${PYFILE}c" && rm __pycache__ -r
