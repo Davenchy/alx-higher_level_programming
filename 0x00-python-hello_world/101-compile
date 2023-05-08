@@ -2,4 +2,5 @@
 from py_compile import compile
 from os import environ
 name = environ["PYFILE"]
+print(f"Compiling {name} ...")
 compile(name, f"{name}c")
