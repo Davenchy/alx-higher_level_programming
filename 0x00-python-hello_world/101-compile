@@ -1,0 +1,5 @@
+#!/usr/bin/python3
+from py_compile import compile
+from os import environ
+name = environ["PYFILE"]
+compile(name, f"{name}c")
