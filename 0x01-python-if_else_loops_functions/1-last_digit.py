@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 import random
 number = random.randint(-10000, 10000)
+if not number:
+    print("Last digit of 0 is 0 and is 0")
+    exit(0)
+
 msgs = ["", "greater than 5", "less than 6 and not 0"]
 msgi = 0
 digit = number % 10
