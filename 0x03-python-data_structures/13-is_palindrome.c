@@ -1,5 +1,43 @@
 #include <stddef.h>
+#include <stdio.h>
 #include "lists.h"
+
+/**
+ * listlen - count the number of nodes inside a linked list
+ * @node: pointer to the first list node
+ * Return: the number of nodes
+ */
+size_t listlen(listint_t *node)
+{
+	size_t count = 0;
+
+	if (!node)
+		goto end;
+
+	do {
+		count++;
+		node = node->next;
+	} while(node);
+end:
+	return (count);
+}
+
+/**
+ * getat - get a linked list node at index
+ * @head: pointer to the first list node
+ * @index: the index of the node after the @head node
+ */
+listint_t *getat(listint_t *head, size_t index)
+{
+	while (index && head)
+	{
+		head = head->next;
+		index--;
+	}
+	if (index)
+		head = NULL;
+	return (head);
+}
 
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
@@ -10,24 +48,19 @@
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *current_node = NULL, *searching_node = NULL, *last_node = NULL;
+	size_t i = 0, len = 0;
 
-	if (!head || !*head || !(*head)->next)
+	if (!head || !*head)
 		return (1);
-	current_node = *head;
-loop:
-	if (current_node == last_node)
-		return (1);
-	searching_node = current_node;
-	while (searching_node->next && searching_node != last_node)
+	len = listlen(*head);
+
+	for (i = 0; i < len/2; i++)
 	{
-		searching_node = searching_node->next;
-		if (searching_node->n == current_node->n)
-			break;
+		listint_t *a, *b;
+
+		a = getat(*head, i), b = getat(*head, len - i - 1);
+		if (a->n != b->n)
+			return (0);
 	}
-	if (searching_node->n != current_node->n)
-		return (0);
-	last_node = searching_node;
-	current_node = current_node->next;
-	goto loop;
+	return (1);
 }
