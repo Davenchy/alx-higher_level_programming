@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdlib.h>
 #include "lists.h"
 
 /**
@@ -10,14 +11,11 @@ long listlen(listint_t *node)
 {
 	long count = 0;
 
-	if (!node)
-		goto end;
-
-	do {
+	while (node)
+	{
 		count++;
 		node = node->next;
-	} while(node);
-end:
+	}
 	return (count);
 }
 
@@ -47,20 +45,28 @@ listint_t *getat(listint_t *head, long index)
  */
 int is_palindrome(listint_t **head)
 {
+	size_t i = 0, len = 0;
 	listint_t *curr = NULL;
-	long len = 0;
+	int *nums = NULL;
 
 	if (!head || !*head)
 		return (1);
-	len = listlen(*head) - 1;
+	len = listlen(*head);
+	nums = malloc(sizeof(int) * len);
+	if (!nums)
+		return (1);
 	curr = *head;
 
-	for (; len >= 0; len -= 2, curr = curr->next)
-	{
-		listint_t *other = getat(curr, len);
+	for (i = 0; i < len; i++, curr = curr->next)
+		nums[i] = curr->n;
 
-		if (curr->n != other->n)
+	for (i = 0; i < len / 2; i++)
+		if (nums[i] != nums[len - i - 1])
+		{
+			free(nums);
 			return (0);
-	}
+		}
+
+	free(nums);
 	return (1);
 }
