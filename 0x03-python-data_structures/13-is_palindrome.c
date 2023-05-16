@@ -1,5 +1,4 @@
 #include <stddef.h>
-#include <stdio.h>
 #include "lists.h"
 
 /**
@@ -7,9 +6,9 @@
  * @node: pointer to the first list node
  * Return: the number of nodes
  */
-size_t listlen(listint_t *node)
+long listlen(listint_t *node)
 {
-	size_t count = 0;
+	long count = 0;
 
 	if (!node)
 		goto end;
@@ -27,7 +26,7 @@ end:
  * @head: pointer to the first list node
  * @index: the index of the node after the @head node
  */
-listint_t *getat(listint_t *head, size_t index)
+listint_t *getat(listint_t *head, long index)
 {
 	while (index && head)
 	{
@@ -48,18 +47,19 @@ listint_t *getat(listint_t *head, size_t index)
  */
 int is_palindrome(listint_t **head)
 {
-	size_t i = 0, len = 0;
+	listint_t *curr = NULL;
+	long len = 0;
 
 	if (!head || !*head)
 		return (1);
-	len = listlen(*head);
+	len = listlen(*head) - 1;
+	curr = *head;
 
-	for (i = 0; i < len/2; i++)
+	for (; len >= 0; len -= 2, curr = curr->next)
 	{
-		listint_t *a, *b;
+		listint_t *other = getat(curr, len);
 
-		a = getat(*head, i), b = getat(*head, len - i - 1);
-		if (a->n != b->n)
+		if (curr->n != other->n)
 			return (0);
 	}
 	return (1);

@@ -61,6 +61,7 @@ int main(void)
 		int data2[] = {1};
 		int data3[] = {1, 1};
 		int data4[] = {1, 2};
+		int data5[] = {1, 2, 3, 4, 3, 2, 1};
 
 		test(data0, 10);
 		test(data1, 5);
@@ -68,6 +69,7 @@ int main(void)
 		test(data3, 2);
 		test(data4, 2);
 		test(data4, 0);
+		test(data5, 7);
 
 		return (0);
 }
