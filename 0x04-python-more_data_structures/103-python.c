@@ -37,8 +37,9 @@ void print_pybytesobject_bytes(PyBytesObject *obj, Py_ssize_t size)
  */
 void print_python_bytes(PyObject *p)
 {
-	Py_ssize_t size, bytes_to_print;
+	Py_ssize_t i, size, bytes_to_print;
 	PyBytesObject *obj = NULL;
+	char *data;
 
 	if (!PyBytes_Check(p))
 	{
@@ -47,13 +48,19 @@ void print_python_bytes(PyObject *p)
 	}
 
 	obj = (PyBytesObject *)p;
-	size = get_pybytesobject_size(obj);
-	bytes_to_print = size + 1 >= 10 ? 10 : size + 1;
+	data = obj->ob_sval;
+	for (size = 0; *data; data++, size++)
+		;
+	data = obj->ob_sval;
+
+	bytes_to_print = size >= 10 ? 10 : size + 1;
 	puts("[.] bytes object info");
 	printf("  size: %ld\n", size);
-	printf("  trying string: %s\n", PyBytes_AS_STRING(p));
+	printf("  trying string: %s\n", data);
 	printf("  first %ld bytes: ", bytes_to_print);
-	print_pybytesobject_bytes(obj, bytes_to_print);
+	for (i = 0; i < bytes_to_print; i++)
+		printf("%02hx%c", data[i] & 0xff, i < bytes_to_print ? ' ' : 0);
+	putchar(10);
 }
 
 /**
