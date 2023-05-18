@@ -4,14 +4,16 @@
 /**
  * get_pybytesobject_size - count the bytes inside the object
  * @obj: the bytes object
+ * Return: the number of bytes stored in obj
  */
-size_t get_pybytesobject_size(PyBytesObject *obj) {
-  char *data = obj->ob_sval;
-  size_t size = 0;
+size_t get_pybytesobject_size(PyBytesObject *obj)
+{
+	char *data = obj->ob_sval;
+	size_t size = 0;
 
 	for (; *data; data++, size++)
 		;
-  return size;
+	return (size);
 }
 
 /**
@@ -61,16 +63,23 @@ void print_python_bytes(PyObject *p)
 void print_python_list(PyObject *p)
 {
 	Py_ssize_t i, size;
+	PyListObject *obj;
 
-	size = Py_SIZE(p);
+	if (!PyList_Check(p))
+		return;
+
+	obj = (PyListObject *)p;
+	size = PyList_Size(p);
+
+	puts("[*] Python list info");
 	printf("[*] Size of the Python List = %ld\n", size);
-	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
+	printf("[*] Allocated = %ld\n", obj->allocated);
 	for (i = 0; i < size; i++)
 	{
-		PyObject *item = PyList_GET_ITEM(p, i);
+		PyObject *item = obj->ob_item[i];
 
-		printf("Element %ld: %s\n", i, Py_TYPE(item)->tp_name);
-		if (PyBytes_Check(p))
+		printf("Element %ld: %s\n", i, item->ob_type->tp_name);
+		if (PyBytes_Check(item))
 			print_python_bytes(item);
 	}
 }
