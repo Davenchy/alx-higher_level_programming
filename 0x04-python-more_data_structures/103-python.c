@@ -10,6 +10,8 @@ void print_python_bytes(PyObject *p)
 	Py_ssize_t i, size;
 	PyBytesObject *obj = NULL;
 
+	fflush(stdout);
+	puts("[.] bytes object info");
 	if (!PyBytes_Check(p))
 	{
 		puts("  [ERROR] Invalid Bytes Object");
@@ -19,8 +21,6 @@ void print_python_bytes(PyObject *p)
 	obj = (PyBytesObject *)p;
 	size = ((PyVarObject *)p)->ob_size;
 
-	fflush(stdout);
-	puts("[.] bytes object info");
 	printf("  size: %ld\n", size);
 
 	if (++size > 10)
@@ -41,14 +41,14 @@ void print_python_list(PyObject *p)
 	Py_ssize_t i, size;
 	PyListObject *obj;
 
+	fflush(stdout);
+	puts("[*] Python list info");
 	if (!PyList_Check(p))
 		return;
 
 	obj = (PyListObject *)p;
 	size = ((PyVarObject *)p)->ob_size;
 
-	fflush(stdout);
-	puts("[*] Python list info");
 	printf("[*] Size of the Python List = %ld\n", size);
 	printf("[*] Allocated = %ld\n", obj->allocated);
 	for (i = 0; i < size; i++)
