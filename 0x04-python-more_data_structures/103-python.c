@@ -23,6 +23,7 @@ void print_python_bytes(PyObject *p)
 	size = ((PyVarObject *)p)->ob_size; /* get the used object size */
 
 	printf("  size: %ld\n", size);
+	printf("  trying string: ");
 	for (i = 0; i < size; i++)
 		if (!obj->ob_sval[i]) /* if end of string break */
 			break;
