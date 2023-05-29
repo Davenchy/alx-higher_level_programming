@@ -9,32 +9,21 @@
  */
 void print_python_float(PyObject *p)
 {
-	char svalue[40], *ptr;
+	char *buf;
 	double value = 0;
 
 	fflush(stdout);
 	puts("[.] float object info");
 	if (!PyFloat_Check(p)) /* if not float object then print error */
-	{
 		puts("  [ERROR] Invalid Float Object");
-		return;
-	}
-
-	value = ((PyFloatObject *)p)->ob_fval;
-	if ((long)(value * 10) % 10)
-	{
-		snprintf(svalue, 40, "%.15lf\n", value);
-		ptr = strchr(svalue, '.');
-		for (; *ptr; ptr++)
-			if (*ptr == '0')
-			{
-				*ptr = 0;
-				break;
-			}
-		fprintf(stdout, "value: %s\n", svalue);
-	}
 	else
-		printf("value: %.1lf\n", value);
+	{
+		value = ((PyFloatObject *)p)->ob_fval;
+		buf = PyOS_double_to_string(
+			value, 'r', 0, Py_DTSF_ADD_DOT_0, Py_DTST_FINITE);
+		printf("value: %s\n", buf);
+		PyMem_Free(buf);
+	}
 }
 
 
