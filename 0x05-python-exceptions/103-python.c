@@ -21,7 +21,7 @@ void print_python_float(PyObject *p)
 		value = ((PyFloatObject *)p)->ob_fval;
 		buf = PyOS_double_to_string(
 			value, 'r', 0, Py_DTSF_ADD_DOT_0, Py_DTST_FINITE);
-		printf("value: %s\n", buf);
+		printf("  value: %s\n", buf);
 		PyMem_Free(buf);
 	}
 }
