@@ -24,7 +24,7 @@ class Square:
     @size.setter
     def size(self, size):
         """Assign value for the private size attribute"""
-        if type(size) is not int:
+        if not isinstance(size, int):
             raise TypeError("size must be an integer")
         elif size < 0:
             raise ValueError("size must be >= 0")
@@ -36,12 +36,12 @@ class Square:
         return self.__position
 
     @position.setter
-    def position(self, postion):
+    def position(self, position):
         """Assign position value"""
-        if (type(postion) is not tuple or len(postion) != 2
-                or postion[0] < 0 or postion[1] < 0):
+        if (not isinstance(position, tuple) or len(position) != 2
+                or not all(isinstance(v, int) and v >= 0 for v in position)):
             raise TypeError("position must be a tuple of 2 positive integers")
-        self.__position = postion
+        self.__position = position
 
     def area(self):
         """Calculate the fucking area value for the fucking square"""
