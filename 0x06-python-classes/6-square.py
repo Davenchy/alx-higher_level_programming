@@ -50,8 +50,8 @@ class Square:
     def my_print(self):
         """prints the square using the '#' character to the stdout
         and whitespaces before the square accourding to the position attr"""
-        [print() for _ in range(self.__position[1])]
         if self.__size > 0:
+            [print() for _ in range(self.__position[1])]
             for _ in range(self.__size):
                 for _ in range(self.__position[0]):
                     print(" ", end="")
