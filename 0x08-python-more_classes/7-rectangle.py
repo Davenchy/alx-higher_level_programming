@@ -67,7 +67,7 @@ class Rectangle:
 
     def __str__(self):
         return "" if self.perimeter() == 0 else "\n".join(
-            ["".join([Rectangle.print_symbol for _ in range(self.__width)])
+            ["".join([str(self.print_symbol) for _ in range(self.__width)])
                 for _ in range(self.__height)])
 
     def __repr__(self):
