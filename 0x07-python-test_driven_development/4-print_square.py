@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Module to print square with side size"""
+
 
 def print_square(size):
     """prints a square using '#' char to the stdout

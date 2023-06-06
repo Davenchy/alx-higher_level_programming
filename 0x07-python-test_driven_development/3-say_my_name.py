@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Module to print first and last names to stdout"""
+
 
 def say_my_name(first_name, last_name=""):
     """prints fullname

@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-
-"""Useless module doctext"""
+"""Module to add two integers together"""
 
 
 def add_integer(a, b=98):

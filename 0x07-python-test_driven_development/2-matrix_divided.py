@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-
-"""Useless module doctext"""
+"""Module to divide a matrix by a number"""
 
 
 def __validate_matrix_rows(matrix):
