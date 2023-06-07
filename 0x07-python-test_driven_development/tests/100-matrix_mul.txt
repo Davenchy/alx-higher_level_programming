@@ -1,0 +1,54 @@
+>>> mm = __import__("100-matrix_mul").matrix_mul
+
+>>> mm([[1, 2], [3, 4]], [[1, 2], [3, 4]])
+[[7, 10], [15, 22]]
+
+>>> mm([[1, 2]], [[3, 4], [5, 6]])
+[[13, 16]]
+
+>>> mm([[1.0, 2.0]], [[3.0, 4.0], [5.0, 6.0]])
+[[13.0, 16.0]]
+
+>>> mm(None, "")
+Traceback (most recent call last):
+TypeError: m_a must be a list
+
+>>> mm([[0]], "loser")
+Traceback (most recent call last):
+TypeError: m_b must be a list
+
+>>> mm([5], [5])
+Traceback (most recent call last):
+TypeError: m_a must be a list of lists
+
+>>> mm([[5]], [5])
+Traceback (most recent call last):
+TypeError: m_b must be a list of lists
+
+>>> mm([[]], [])
+Traceback (most recent call last):
+ValueError: m_a can't be empty
+
+>>> mm([[5]], [])
+Traceback (most recent call last):
+ValueError: m_b can't be empty
+
+>>> mm([[5.3]], [["5.3"]])
+Traceback (most recent call last):
+TypeError: m_b should contain only integers or floats
+
+>>> mm([["5.3"]], [["5.3"]])
+Traceback (most recent call last):
+TypeError: m_a should contain only integers or floats
+
+>>> mm([[1, 2], [3, 4], [5, 6, 7]], [["5.3"]])
+Traceback (most recent call last):
+TypeError: m_b should contain only integers or floats
+
+>>> mm([[1, 2], [3, 4], [5, 6, 7]], [[5.3]])
+Traceback (most recent call last):
+TypeError: each row of m_a must be of the same size
+
+>>> mm([[1, 2], [3, 4]], [[1, 2]])
+Traceback (most recent call last):
+ValueError: m_a and m_b can't be multiplied
