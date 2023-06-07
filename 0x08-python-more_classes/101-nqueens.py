@@ -2,7 +2,7 @@
 
 """NQueens problem solution"""
 
-from sys import stderr, argv
+from sys import argv
 
 
 def find_sutables(queen, n):
@@ -113,7 +113,7 @@ def check_board(n, queens):
     return True
 
 
-def solve(n, queens, hold):
+def solve(n, queens, hold) -> list[int] | None:
     """Solves nqueens problem by returning list of queen index in each row
     Args:
         n (int): number of queens also the board size
@@ -149,20 +149,22 @@ def solve(n, queens, hold):
 if __name__ == "__main__":
     # check number of arguments
     if len(argv) != 2:
-        print("Usage: nqueens N", file=stderr)
+        print("Usage: nqueens N")
         exit(1)
 
     # try to get N from arguments
     try:
         N = int(argv[1])
     except Exception:
-        print("N must be a number", file=stderr)
+        print("N must be a number")
         exit(1)
 
     if N < 4:
-        print("N must be at least 4", file=stderr)
+        print("N must be at least 4")
         exit(1)
 
     for curr in range(1, N - 1):
         sol = solve(N, [curr], [i for i in range(N) if i != curr])
-        print(list(enumerate(sol)))
+        if sol is None:
+            continue
+        print(list(map(lambda x: list(x), enumerate(sol))))
