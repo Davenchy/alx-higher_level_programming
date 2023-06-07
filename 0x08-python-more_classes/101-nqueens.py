@@ -5,242 +5,145 @@
 from sys import stderr, argv
 
 
-class BoardSolution:
-    """The board sorted solution"""
-
-    queen_symbol = "x"
-    empty_symbol = "-"
-    space_symbol = " "
-
-    def __init__(self, board, solution_index):
-        """Initialize a new board solution
-
+def find_sutables(queen, n):
+    """Find sutable next queen values for the current queen
         Args:
-            board (board): the board object
-            solution_index (int): the solution index"""
-        if not isinstance(board, Board):
-            raise TypeError("board must be Board instance")
-        if type(solution_index) is not int:
-            raise TypeError("n must be an integer")
-        if solution_index >= board.number_of_solutions:
-            raise IndexError(f"n is out of range: {board.number_of_solutions}")
-        self.__board = board
-        self.__index = solution_index
-        self.__N = board.N
-
-    def __get_sutables(self, q) -> list[int]:
-        """Returns the sutable next or prev row queen indexes for queen q
-
-        Args:
-            q (int): the queen index
-
+            queen (int): the queen index in a row
+            n: the row length
+        Returns: List with sutable queens indexes in the next row
         Examples:
-            # create board with 4 rows x 4 cols
-            >>> board = Board(4)
-
-            # loads solution of index 0
-            # to get the number of solutions
-            # check ``board.number_of_solutions``
-            >>> sol = BoardSolution(board, 0)
-
-            # the queen(q) at col 0 expects queen at col 2 or 3
-            # for the next or prev row at board that has 4 cols
-            >>> sol._BoardSolution__get_sutables(0)
+            >>> find_sutables(0, 4)
             [2, 3]
 
-            >>> sol._BoardSolution__get_sutables(2)
-            [0]
+            >>> find_sutables(1, 4)
+            [3]
 
-            >>> sol._BoardSolution__get_sutables(3)
-            [0, 1]
-
-            >>> sol._BoardSolution__get_sutables(4)
-            Traceback (most recent call last):
-            ValueError: q value out of range: 4: 3
-
-        Returns: List of integers (the sutable indexes)
+            >>> find_sutables(2, 6)
+            [0, 4, 5]
         """
-        if type(q) is not int:
-            raise ValueError("q must be an integer")
-        n = self.__N
-        if 0 < q >= n or q < 0:
-            raise ValueError(
-                f"q value out of range: {q}: {self.__N - 1}")
+    if type(queen) is not int:
+        raise TypeError("queen must be an integer")
+    if queen < 0 or queen >= n:
+        raise IndexError("queen is out of range")
+    if type(n) is not int:
+        raise TypeError("n must be an integer")
+    if n < 4:
+        raise ValueError("n must be >= 4")
 
-        qs = self.__board.queens
-        if q == 0:
-            return qs[2:]
-        elif q == n - 1:
-            return qs[0:-2]
-        else:
-            return qs[0:q - 1] + qs[q + 2:]
-
-    def __pick_next(self, sutables, queens) -> int | None:
-        """Returns the next suitable queen
-
-        Args:
-            sutables (int[]): list of sutable queens
-            queens (int[]): the current avalible queens list
-
-        Examples:
-            >>> board = Board(4)
-            >>> sol = board.get_solution(0)
-
-            >>> sol._BoardSolution__pick_next([0, 1], [2, 1, 3])
-            1
-
-            >>> sol._BoardSolution__pick_next([0, 1], [2, 1, 3, 0])
-            0
-
-            >>> sol._BoardSolution__pick_next("a", [2, 1, 3, 0])
-            Traceback (most recent call last):
-            TypeError: sutables must be a list
-
-            >>> sol._BoardSolution__pick_next([0, 1], "queens")
-            Traceback (most recent call last):
-            TypeError: queens must be a list
-            """
-        if type(sutables) is not list:
-            raise TypeError("sutables must be a list")
-        if type(queens) is not list:
-            raise TypeError("queens must be a list")
-        for x in sutables:
-            if x in queens:
-                return x
-
-    def solve(self):
-        """Start solving the board
-
-        Examples:
-            >>> board = Board(4)
-            >>> board.get_solution(0)"""
-        current = self.__index + 1
-        queens = self.__board.queens
-        solution = []
-
-        while current is not None:
-            # push current to solution
-            solution.append(current)
-            queens.remove(current)
-
-            # find next of current and set as current for next iteration
-            suts = self.__get_sutables(current)
-            pick = self.__pick_next(suts, queens)
-            current = pick
-
-        if len(queens) > 0:
-            suts = self.__get_sutables(queens[0])
-            if solution[0] in suts:
-                solution.insert(0, queens[0])
-
-        self.__queens = solution
-
-    def print(self):
-        """Print solution board using ``BoardSolution.queen_symbol`` and
-        ``BoardSolution.empty_symbol``"""
-        for q in self:
-            print(self.space_symbol.join(
-                [(self.queen_symbol if i == q else self.empty_symbol)
-                    for i in range(self.__N)]))
-
-    def __iter__(self):
-        if not hasattr(self, "_BoardSolution__queens"):
-            return [].__iter__()
-        else:
-            return self.__queens.__iter__()
-
-    def __len__(self):
-        if not hasattr(self, "_BoardSolution__queens"):
-            return 0
-        return len(self.__queens)
-
-    def __getitem__(self, index) -> int:
-        if not hasattr(self, "_BoardSolution__queens"):
-            raise IndexError("index out of range")
-        return self.__queens[index]
-
-    def __str__(self):
-        if len(self) == 0:
-            return "BoardSolution(Not Solved)"
-        return ", ".join([f"{n}" for n in self.__queens])
+    queens = [i for i in range(n)]
+    if queen == 0:
+        return queens[2:]
+    elif queen == n - 1:
+        return queens[:-2]
+    else:
+        return queens[0:queen - 1] + queens[queen+2:]
 
 
-class Board:
-    """Board that contains queens sorted as required"""
-    def __init__(self, N):
-        """Initialize a new Board instance and generate queens
+def generate_steps(queen, step, n):
+    """Iterates through (row, column) + step, as row and column in range ]0, n]
+    Args:
+        queen (tuple(int, int)): the queen coordinate
+        step (tuple(int, int)): the step to add to the queen each iteration
+        n (int): the board size (n == columns, n == rows)
+    Return: Iterable(tuple(int, int))
+    Examples:
+        >>> [x for x in generate_steps((2, 2), (0, 1), 5)]
+        [(2, 3), (2, 4)]
 
-        Args:
-            N (int): The board dimensions and the queens count (N >= 4)"""
-        if N < 4:
-            raise ValueError("N must be at least 4")
-        self.__N = N
-        self.__queens = [i for i in range(N)]
+        >>> [x for x in generate_steps((2, 2), (-1, 1), 5)]
+        [(1, 3), (0, 4)]"""
+    if (type(queen) is not tuple or
+            len(queen) != 2 or not all([type(x) is int for x in queen])):
+        raise TypeError("queen must be a tuple(int, int)")
+    if (type(step) is not tuple or
+            len(step) != 2 or not all([type(x) is int for x in step])):
+        raise TypeError("queen must be a tuple(int, int)")
+    if type(n) is not int:
+        raise TypeError("n must be an integer")
 
-    @property
-    def N(self):
-        """The board dimensions and the queens count"""
-        return self.__N
-
-    @property
-    def queens(self):
-        """A copy list of the generated queens list with the default sort"""
-        return self.__queens[:]
-
-    @property
-    def number_of_solutions(self):
-        """The number of avalible solutions for current board
-
-        Examples:
-            >>> Board(4).number_of_solutions
-            2
-
-            >>> Board(6).number_of_solutions
-            4"""
-        return self.__N - 2
-
-    def get_solution(self, n) -> BoardSolution:
-        """Return solution by its index
-        Check Board.number_of_solutions to get the number of the avalible
-        solutions
-
-        Args:
-            n (int): the index of the solution
-
-        Examples:
-            >>> isinstance(Board(4).get_solution(0), BoardSolution)
-            True
-
-            >>> Board(4).get_solution(4)
-            Traceback (most recent call last):
-            IndexError: n is out of range: 2
-            """
-        sol = BoardSolution(self, n)
-        sol.solve()
-        return sol
-
-    def __iter__(self):
-        return BoardIterator(self)
+    a, b = step
+    x, y = queen[0] + a, queen[1] + b
+    while x >= 0 and x < n and y >= 0 and y < n:
+        yield x, y
+        x += a
+        y += b
 
 
-class BoardIterator:
-    """A class to iterate through the board solutions"""
-    def __init__(self, board):
-        """Initialize board iterator class
+def check_board(n, queens):
+    """Checks if the board has (n) queens all in idle state
+    Args:
+        n (int): the size of the board
+        queens (list[int]): list of integers each one represents a queen
+            index in a row
+    Returns: True or False
+    Examples:
+        >>> check_board(4, [1, 3, 0, 2])
+        True
 
-        Args:
-            board (Board): the board object to iterate through its solutions"""
-        if not isinstance(board, Board):
-            raise TypeError("board must be an instance of Board")
-        self.__board = board
-        self.__solutions = board.number_of_solutions
-        self.__current_solution = -1
+        >>> check_board(3, [1, 3, 0])
+        True
 
-    def __next__(self) -> BoardSolution:
-        if self.__current_solution < self.__solutions - 1:
-            self.__current_solution += 1
-            return self.__board.get_solution(self.__current_solution)
-        raise StopIteration
+        >>> check_board(5, [1, 3, 0, 4, 2])
+        False
+
+        >>> check_board(3, [1, 3, 0, 2])
+        Traceback (most recent call last):
+        ValueError: length of queens must be equal to n"""
+    if type(n) is not int:
+        raise TypeError("n must be an intgere")
+    if type(queens) is not list or not all(type(x) is int for x in queens):
+        raise TypeError("queens must be a list of integers")
+    if len(queens) != n:
+        raise ValueError("length of queens must be equal to n")
+
+    coordinates = list(enumerate(queens))
+    for x in coordinates:
+        for c in generate_steps(x, (1, 1), n):
+            if c in coordinates:
+                return False
+        for c in generate_steps(x, (-1, 1), n):
+            if c in coordinates:
+                return False
+        for c in generate_steps(x, (1, -1), n):
+            if c in coordinates:
+                return False
+        for c in generate_steps(x, (-1, -1), n):
+            if c in coordinates:
+                return False
+    return True
+
+
+def solve(n, queens, hold):
+    """Solves nqueens problem by returning list of queen index in each row
+    Args:
+        n (int): number of queens also the board size
+        queens (list(int)): A list of queens that has the first queen index
+        hold: (list(int)): A list of the remaining queens
+    Examples:
+        >>> solve(4, [2], [0, 1, 3])
+        [2, 0, 3, 1]
+
+        >>> solve(4, [1], [0, 2, 3])
+        [1, 3, 0, 2]"""
+    if type(n) is not int:
+        raise TypeError("n must be an integer")
+    if type(queens) is not list or not all(type(x) is int for x in queens):
+        raise TypeError("queens must be a list of intgeres")
+    if type(hold) is not list or not all(type(x) is int for x in hold):
+        raise TypeError("hold must be a list of intgeres")
+
+    if len(queens) == n and check_board(n, queens):
+        return queens
+    for x in hold:
+        q = queens[-1]
+        if x not in find_sutables(q, n):
+            continue
+        qs = queens[:] + [x]
+        h = hold[:]
+        h.remove(x)
+        s = solve(n, qs, h)
+        if s:
+            return s
 
 
 if __name__ == "__main__":
@@ -260,6 +163,6 @@ if __name__ == "__main__":
         print("N must be at least 4", file=stderr)
         exit(1)
 
-    board = Board(N)
-    for solution in board:
-        print(list(map(lambda e: list(e), enumerate(solution))))
+    for curr in range(1, N - 1):
+        sol = solve(N, [curr], [i for i in range(N) if i != curr])
+        print(list(enumerate(sol)))
