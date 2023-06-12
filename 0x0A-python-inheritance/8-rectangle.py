@@ -18,6 +18,10 @@ class BaseGeometry:
 class Rectangle(BaseGeometry):
     """A Rectangle class based on the BaseGeometry class"""
     def __init__(self, width, height):
+        """Creates an instance of Rectangle class
+        Args:
+            width (int): the rectangle width
+            height (int): the rectangle height"""
         self.integer_validator("width", width)
         self.integer_validator("height", height)
         self.__width = width
