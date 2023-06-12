@@ -1,18 +1,7 @@
 #!/usr/bin/python3
-"""A model that contains BaseGeometry class and subclasses"""
+"""A model that contains The Rectangle class"""
 
-
-class BaseGeometry:
-    """Geometry bass class"""
-    def area(self):
-        raise Exception("area() is not implemented")
-
-    def integer_validator(self, name, value):
-        """Validate that value is integer and greater than 0"""
-        if type(value) is not int:
-            raise TypeError(f"{name} must be an integer")
-        if value <= 0:
-            raise ValueError(f"{name} must be greater than 0")
+BaseGeometry = __import__("7-base_geometry").BaseGeometry
 
 
 class Rectangle(BaseGeometry):
