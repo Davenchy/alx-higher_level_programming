@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """model that contains function that detect if object is instance of a class"""
 
+
 def is_same_class(obj, a_class):
     """checks if obj is instance of a_class"""
     if obj is None:
