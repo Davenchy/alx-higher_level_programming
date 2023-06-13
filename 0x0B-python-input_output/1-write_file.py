@@ -11,7 +11,7 @@ def write_file(filename="", text=""):
     Examples:
     >>> write_file('my_text', "world")
     5"""
-    writen = 0
+    written = 0
     with open(filename, 'w') as file:
-        writen = file.write(text)
-    return writen
+        written = file.write(text)
+    return written
