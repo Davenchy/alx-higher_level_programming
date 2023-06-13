@@ -5,4 +5,10 @@ import json
 
 
 def to_json_string(my_obj):
+    """converts object into json string without handling exceptions
+    Args:
+        my_obj: object to convert
+    Returns:
+        json string
+    """
     return json.dumps(my_obj)
