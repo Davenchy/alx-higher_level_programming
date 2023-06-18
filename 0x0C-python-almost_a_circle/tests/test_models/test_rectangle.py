@@ -132,6 +132,14 @@ class TestRectangleCase(unittest.TestCase):
                 output = file.getvalue()
         self.assertEqual(output, "#####\n#####\n#####\n#####\n#####\n")
 
+        r = Rectangle(3, 3, 3, 4)
+        output = str()
+        with io.StringIO() as file:
+            with contextlib.redirect_stdout(file):
+                r.display()
+                output = file.getvalue()
+        self.assertEqual(output, "\n\n\n\n   ###\n   ###\n   ###\n")
+
     def test_to_string(self):
         r = Rectangle(2, 4)
         self.assertEqual(str(r), '[Rectangle] (1) 0/0 - 2/4')
