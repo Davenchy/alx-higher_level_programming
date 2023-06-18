@@ -25,3 +25,22 @@ class TestSquareCase(unittest.TestCase):
         self.assertEqual(s.height, 5)
         self.assertEqual(s.id, 10)
         self.assertEqual(str(s), '[Square] (10) 20/30 - 5')
+
+    def test_size(self):
+        s = Square(10)
+        self.assertEqual(str(s), '[Square] (1) 0/0 - 10')
+
+        s.size = 50
+        self.assertEqual(str(s), '[Square] (1) 0/0 - 50')
+
+        with self.assertRaises(ValueError) as err:
+            s.size = 0
+        self.assertEqual(str(err.exception), "width must be > 0")
+
+        with self.assertRaises(ValueError) as err:
+            s.size = -1
+        self.assertEqual(str(err.exception), "width must be > 0")
+
+        with self.assertRaises(TypeError) as err:
+            s.size = "10"
+        self.assertEqual(str(err.exception), "width must be an integer")

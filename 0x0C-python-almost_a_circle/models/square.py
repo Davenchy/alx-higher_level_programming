@@ -16,5 +16,16 @@ class Square(Rectangle):
             id (int|None): the id of the current square"""
         super().__init__(size, size, x, y, id)
 
+    @property
+    def size(self):
+        """Returns the size of the side length of the square"""
+        return self.width
+
+    @size.setter
+    def size(self, value):
+        """Sets the value if the square's side length"""
+        self.width = value
+        self.height = value
+
     def __str__(self):
         return f"[Square] ({self.id}) {self.x}/{self.y} - {self.width}"
