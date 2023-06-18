@@ -1,6 +1,8 @@
 import unittest
 from models.rectangle import Rectangle
 from models.base import Base
+import io
+import contextlib
 
 
 class TestRectangleCase(unittest.TestCase):
@@ -108,3 +110,20 @@ class TestRectangleCase(unittest.TestCase):
 
         r = Rectangle(3, 5)
         self.assertEqual(r.area(), 15)
+
+    def test_display(self):
+        r = Rectangle(3, 3)
+        output = str()
+        with io.StringIO() as file:
+            with contextlib.redirect_stdout(file):
+                r.display()
+                output = file.getvalue()
+        self.assertEqual(output, "###\n###\n###\n")
+
+        r = Rectangle(5, 5)
+        output = str()
+        with io.StringIO() as file:
+            with contextlib.redirect_stdout(file):
+                r.display()
+                output = file.getvalue()
+        self.assertEqual(output, "#####\n#####\n#####\n#####\n#####\n")
