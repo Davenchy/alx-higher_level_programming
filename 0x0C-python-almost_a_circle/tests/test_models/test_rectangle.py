@@ -176,3 +176,18 @@ class TestRectangleCase(unittest.TestCase):
 
         self.assertRaises(ValueError, r.update, 0, 0, 0, 0, 0)
         self.assertEqual(r.id, 0)
+
+    def test_update_kargs(self):
+        r = Rectangle(10, 10, 10, 10)
+
+        r.update()
+        self.assertEqual(str(r), "[Rectangle] (1) 10/10 - 10/10")
+        r.update(x=5)
+        self.assertEqual(str(r), "[Rectangle] (1) 5/10 - 10/10")
+        r.update(width=7, y=8)
+        self.assertEqual(str(r), "[Rectangle] (1) 5/8 - 7/10")
+        r.update(id=80, height=90)
+        self.assertEqual(str(r), "[Rectangle] (80) 5/8 - 7/90")
+        r.update(password=123456789)
+        self.assertEqual(str(r), "[Rectangle] (80) 5/8 - 7/90")
+        self.assertRaises(ValueError, r.update, width=0)

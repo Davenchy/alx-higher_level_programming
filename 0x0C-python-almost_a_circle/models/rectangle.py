@@ -104,25 +104,21 @@ class Rectangle(Base):
         print(((' ' * self.__x) + '#' * self.__width + '\n') * self.__height,
               end='')
 
-    def update(self, *args):
-        """Updates the rectangle values
+    def update(self, *args, **kwargs):
+        """Updates the rectangle values by using positional arguments
+        or by using keyword arguments, can not use both at once.
 
-        Args:
+        Positional Arguments Order:
             #0: id
             #1: width
             #2: height
             #3: x
             #4: y"""
-        if len(args) >= 1:
-            self.id = args[0]
-        if len(args) >= 2:
-            self.width = args[1]
-        if len(args) >= 3:
-            self.height = args[2]
-        if len(args) >= 4:
-            self.x = args[3]
-        if len(args) >= 5:
-            self.y = args[4]
+        alen = len(args)
+        fields = ['id', 'width', 'height', 'x', 'y']
+        for index, field in enumerate(fields):
+            if (not alen and field in kwargs) or alen >= index + 1:
+                setattr(self, field, args[index] if alen else kwargs[field])
 
     def __str__(self):
         return f"""[Rectangle] ({self.id}) {self.__x}/{self.__y} - {
