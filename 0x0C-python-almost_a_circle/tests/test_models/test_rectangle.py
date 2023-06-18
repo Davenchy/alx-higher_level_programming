@@ -149,3 +149,30 @@ class TestRectangleCase(unittest.TestCase):
 
         r = Rectangle(1, 2, 3, 4)
         self.assertEqual(str(r), '[Rectangle] (2) 3/4 - 1/2')
+
+    def test_update(self):
+        r = Rectangle(1, 1)
+
+        r.update()
+        self.assertEqual(r.id, 1)
+        self.assertEqual(r.width, 1)
+        self.assertEqual(r.height, 1)
+        self.assertEqual(r.x, 0)
+        self.assertEqual(r.y, 0)
+
+        r.update(5)
+        self.assertEqual(r.id, 5)
+        self.assertEqual(r.width, 1)
+        self.assertEqual(r.height, 1)
+        self.assertEqual(r.x, 0)
+        self.assertEqual(r.y, 0)
+
+        r.update(6, 7, 8, 9, 10)
+        self.assertEqual(r.id, 6)
+        self.assertEqual(r.width, 7)
+        self.assertEqual(r.height, 8)
+        self.assertEqual(r.x, 9)
+        self.assertEqual(r.y, 10)
+
+        self.assertRaises(ValueError, r.update, 0, 0, 0, 0, 0)
+        self.assertEqual(r.id, 0)

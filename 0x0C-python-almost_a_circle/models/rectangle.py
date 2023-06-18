@@ -104,6 +104,26 @@ class Rectangle(Base):
         print(((' ' * self.__x) + '#' * self.__width + '\n') * self.__height,
               end='')
 
+    def update(self, *args):
+        """Updates the rectangle values
+
+        Args:
+            #0: id
+            #1: width
+            #2: height
+            #3: x
+            #4: y"""
+        if len(args) >= 1:
+            self.id = args[0]
+        if len(args) >= 2:
+            self.width = args[1]
+        if len(args) >= 3:
+            self.height = args[2]
+        if len(args) >= 4:
+            self.x = args[3]
+        if len(args) >= 5:
+            self.y = args[4]
+
     def __str__(self):
         return f"""[Rectangle] ({self.id}) {self.__x}/{self.__y} - {
         self.__width}/{self.__height}"""
