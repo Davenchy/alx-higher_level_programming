@@ -27,5 +27,26 @@ class Square(Rectangle):
         self.width = value
         self.height = value
 
+    def update(self, *args, **kwargs):
+        """Updates the square attributes using positional arguments or
+        keyworded arguments, can not use both at the same time.
+
+        The order of the positional arguments:
+            #0: id
+            #1: size
+            #2: x
+            #3: y"""
+        args = list(args)
+        if len(args) >= 2:
+            args = args[:2] + args[1:]
+        if 'width' in kwargs:
+            del kwargs['width']
+        if 'height' in kwargs:
+            del kwargs['height']
+        if 'size' in kwargs:
+            kwargs['width'] = kwargs['size']
+            kwargs['height'] = kwargs['size']
+        super().update(*args, **kwargs)
+
     def __str__(self):
         return f"[Square] ({self.id}) {self.x}/{self.y} - {self.width}"
