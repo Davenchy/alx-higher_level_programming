@@ -101,3 +101,10 @@ class TestRectangleCase(unittest.TestCase):
         r = Rectangle(1, 2, 0, 0, 15)
         self.assertEqual(r.id, 15)
         self.assertEqual(Base._Base__nb_objects, 2)
+
+    def test_area(self):
+        r = Rectangle(2, 4)
+        self.assertEqual(r.area(), 8)
+
+        r = Rectangle(3, 5)
+        self.assertEqual(r.area(), 15)
