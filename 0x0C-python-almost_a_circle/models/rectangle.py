@@ -98,4 +98,9 @@ class Rectangle(Base):
         return self.width * self.height
 
     def display(self):
+        """Display the rectangle on the screen"""
         print(('#' * self.__width + '\n') * self.__height, end='')
+
+    def __str__(self):
+        return f"""[Rectangle] ({self.id}) {self.__x}/{self.__y} - {
+        self.__width}/{self.__height}"""

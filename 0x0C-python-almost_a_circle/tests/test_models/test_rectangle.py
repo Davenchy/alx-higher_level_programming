@@ -105,6 +105,8 @@ class TestRectangleCase(unittest.TestCase):
         self.assertEqual(Base._Base__nb_objects, 2)
 
     def test_area(self):
+        self.assertTrue(hasattr(Rectangle.area, '__doc__'))
+
         r = Rectangle(2, 4)
         self.assertEqual(r.area(), 8)
 
@@ -112,6 +114,8 @@ class TestRectangleCase(unittest.TestCase):
         self.assertEqual(r.area(), 15)
 
     def test_display(self):
+        self.assertTrue(hasattr(Rectangle.display, '__doc__'))
+
         r = Rectangle(3, 3)
         output = str()
         with io.StringIO() as file:
@@ -127,3 +131,13 @@ class TestRectangleCase(unittest.TestCase):
                 r.display()
                 output = file.getvalue()
         self.assertEqual(output, "#####\n#####\n#####\n#####\n#####\n")
+
+    def test_to_string(self):
+        r = Rectangle(2, 4)
+        self.assertEqual(str(r), '[Rectangle] (1) 0/0 - 2/4')
+
+        r = Rectangle(10, 20, 3, 5, 12)
+        self.assertEqual(str(r), '[Rectangle] (12) 3/5 - 10/20')
+
+        r = Rectangle(1, 2, 3, 4)
+        self.assertEqual(str(r), '[Rectangle] (2) 3/4 - 1/2')
