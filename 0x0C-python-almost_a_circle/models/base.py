@@ -2,6 +2,7 @@
 """Module of the base class"""
 
 import json
+import csv
 
 
 class Base:
@@ -105,5 +106,55 @@ class Base:
                 json_string = file.read()
             objs_list = Base.from_json_string(json_string)
             return map(lambda d: cls.create(**d), objs_list)
-        except Exception:
+        except FileNotFoundError:
             return []
+        except Exception as err:
+            raise err
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Saves the objects in ''list_objs'' of type cls into a csv file
+        of the same name of the class
+
+        Args:
+            list_objs (list): list of objects that inheit from Base"""
+        objs = list_objs[:]
+        header = None
+        for i in range(len(objs)):
+            item = objs[i]
+            if isinstance(item, Base):
+                d = item.to_dictionary()
+                objs[i] = d.values()
+                if header is None:
+                    header = d.keys()
+            else:
+                raise TypeError(r"""list_objs items must be instances of
+                    classes inherits from Base""")
+        with open(cls.__name__ + ".csv", "w") as file:
+            writer = csv.writer(file)
+            if header is not None:
+                writer.writerow(header)
+            writer.writerows(objs)
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Loads a list of objects that inherits from the Base class from a
+        csv file of the same name of the class name"""
+        try:
+            objs_list = list()
+            with open(cls.__name__ + ".csv", "r") as file:
+                reader = csv.reader(file)
+                header = None
+                for row in reader:
+                    if header is None:
+                        header = row
+                        continue
+                    d = dict(zip(header, map(lambda v: int(v), row)))
+                    obj = cls(*[1, 1])
+                    obj.update(**d)
+                    objs_list.append(obj)
+            return objs_list
+        except FileNotFoundError:
+            return []
+        except Exception as err:
+            raise err
