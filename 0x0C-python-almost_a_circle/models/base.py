@@ -56,7 +56,7 @@ class Base:
         return json.dumps(list_dictionaries)
 
     @staticmethod
-    def from_json_string(json_string):
+    def from_json_string(json_string) -> list[dict]:
         """loads dictionaries from json string
 
         Args:
@@ -95,3 +95,15 @@ class Base:
                     classes inherits from Base""")
         with open(cls.__name__ + ".json", "w") as file:
             file.write(cls.to_json_string(objs))
+
+    @classmethod
+    def load_from_file(cls):
+        """Loads a list of objects that inherits from the Base class from a
+        file of the same name of the class name"""
+        try:
+            with open(cls.__name__ + ".json", "r") as file:
+                json_string = file.read()
+            objs_list = Base.from_json_string(json_string)
+            return map(lambda d: cls.create(**d), objs_list)
+        except Exception:
+            return []
