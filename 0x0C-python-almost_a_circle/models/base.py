@@ -41,6 +41,32 @@ class Base:
             raise TypeError("list_dictionaries must be a list of dicts")
         return json.dumps(list_dictionaries)
 
+    @staticmethod
+    def from_json_string(json_string):
+        """loads dictionaries from json string
+
+        Args:
+            json_string (str): the json string
+
+        Returns:
+            list[dict]"""
+        if json_string is None:
+            return []
+        if type(json_string) is not str:
+            raise TypeError("json_string must be a string")
+        if not len(json_string):
+            return []
+
+        try:
+            data = json.loads(json_string)
+            if not isinstance(data, list):
+                return []
+            if not all(isinstance(i, dict) for i in data):
+                return []
+            return data
+        except Exception:
+            return []
+
     @classmethod
     def save_to_file(cls, list_objs):
         """Writes a list of objects that inherits from the Base class to a file

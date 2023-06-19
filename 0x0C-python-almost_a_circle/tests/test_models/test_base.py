@@ -41,3 +41,11 @@ class TestBaseClass(unittest.TestCase):
 
         data = ["hello"]
         self.assertRaises(TypeError, Base.to_json_string, data)
+
+    def test_from_json_string(self):
+        self.assertTrue(hasattr(Base, 'from_json_string'))
+
+        self.assertEqual(Base.from_json_string(None), [])
+        self.assertEqual(Base.from_json_string(""), [])
+        self.assertEqual(Base.from_json_string("hello world"), [])
+        self.assertEqual(Base.from_json_string('[{"x": 5}]'), [{"x": 5}])
