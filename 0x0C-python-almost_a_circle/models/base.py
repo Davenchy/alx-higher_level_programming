@@ -21,6 +21,20 @@ class Base:
             Base.__nb_objects += 1
             self.id = Base.__nb_objects
 
+    @classmethod
+    def create(cls, **dictionary):
+        """Creates an instance with attributes defined in **dictionary"""
+        dummy = cls(*[1, 1])
+        dummy.update(**dictionary)
+        return dummy
+
+    def update(self, *args, **kwargs):
+        """Assigns *args or **kwargs as attributes values"""
+        if len(args) >= 1:
+            self.id = args[0]
+        elif 'id' in kwargs:
+            self.id = kwargs['id']
+
     def to_dictionary(self):
         """converts instance into a dictionary of its attributes"""
         return self.__dict__
