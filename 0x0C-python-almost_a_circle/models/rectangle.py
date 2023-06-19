@@ -120,6 +120,19 @@ class Rectangle(Base):
             if (not alen and field in kwargs) or alen >= index + 1:
                 setattr(self, field, args[index] if alen else kwargs[field])
 
+    def to_dictionary(self):
+        """Returns dictionary with the Rectangle attributes and its values
+
+        Attributes:
+            id, width, height, x, y"""
+        return {
+            'id': self.id,
+            'width': self.width,
+            'height': self.height,
+            'x': self.x,
+            'y': self.y
+        }
+
     def __str__(self):
         return f"""[Rectangle] ({self.id}) {self.__x}/{self.__y} - {
         self.__width}/{self.__height}"""

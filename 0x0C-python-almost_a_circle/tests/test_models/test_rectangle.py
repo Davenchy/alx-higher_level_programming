@@ -192,3 +192,27 @@ class TestRectangleCase(unittest.TestCase):
         r.update(password=123456789)
         self.assertEqual(str(r), "[Rectangle] (80) 5/8 - 7/90")
         self.assertRaises(ValueError, r.update, width=0)
+
+    def test_to_dictionary(self):
+        r = Rectangle(10, 20, 30, 40, 50)
+
+        self.assertTrue(hasattr(r, 'to_dictionary'))
+
+        data = r.to_dictionary()
+
+        self.assertIsInstance(data, dict)
+
+        self.assertTrue('id' in data)
+        self.assertEqual(data['id'], 50)
+
+        self.assertTrue('width' in data)
+        self.assertEqual(data['width'], 10)
+
+        self.assertTrue('height' in data)
+        self.assertEqual(data['height'], 20)
+
+        self.assertTrue('x' in data)
+        self.assertEqual(data['x'], 30)
+
+        self.assertTrue('y' in data)
+        self.assertEqual(data['y'], 40)
