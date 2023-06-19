@@ -48,5 +48,16 @@ class Square(Rectangle):
             kwargs['height'] = kwargs['size']
         super().update(*args, **kwargs)
 
+    def to_dictionary(self):
+        """Returns a dictionary with all attributes of the square
+
+        Attributes:
+            id, x, y, size"""
+        data = super().to_dictionary()
+        data['size'] = data['width']
+        del data['width']
+        del data['height']
+        return data
+
     def __str__(self):
         return f"[Square] ({self.id}) {self.x}/{self.y} - {self.width}"

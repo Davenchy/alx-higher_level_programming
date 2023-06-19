@@ -72,3 +72,24 @@ class TestSquareCase(unittest.TestCase):
 
         s1.update(width=7, height=89)
         self.assertEqual(str(s1), '[Square] (89) 12/1 - 7')
+
+    def test_to_dictionary(self):
+        s = Square(10, 20, 30, 40)
+
+        self.assertTrue(hasattr(s, 'to_dictionary'))
+
+        data = s.to_dictionary()
+
+        self.assertIsInstance(data, dict)
+
+        self.assertTrue('id' in data)
+        self.assertEqual(data['id'], 40)
+
+        self.assertTrue('size' in data)
+        self.assertEqual(data['size'], 10)
+
+        self.assertTrue('x' in data)
+        self.assertEqual(data['x'], 20)
+
+        self.assertTrue('y' in data)
+        self.assertEqual(data['y'], 30)
