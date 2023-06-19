@@ -22,3 +22,22 @@ class TestBaseClass(unittest.TestCase):
         b = Base(50)
         self.assertEqual(b.id, 50)
         self.assertEqual(Base._Base__nb_objects, 2)
+
+    def test_to_json_string(self):
+        self.assertTrue(hasattr(Base, 'to_json_string'))
+
+        data = None
+        self.assertEqual(Base.to_json_string(data), '[]')
+
+        data = []
+        self.assertEqual(Base.to_json_string(data), '[]')
+
+        data = [{'name': 'Davenchy', 'age': 24}]
+        self.assertEqual(Base.to_json_string(data),
+                         '[{"name": "Davenchy", "age": 24}]')
+
+        data = "hello"
+        self.assertRaises(TypeError, Base.to_json_string, data)
+
+        data = ["hello"]
+        self.assertRaises(TypeError, Base.to_json_string, data)

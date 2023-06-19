@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Module of the base class"""
 
+import json
+
 
 class Base:
     """The Base Class"""
@@ -18,3 +20,19 @@ class Base:
         else:
             Base.__nb_objects += 1
             self.id = Base.__nb_objects
+
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """Convert a list of dictionaries to a json string
+
+        Args:
+            list_dictionaries (list): the list of dictionaries to convert
+
+        Returns:
+            str: the json string"""
+        if list_dictionaries is None:
+            return "[]"
+        if (not isinstance(list_dictionaries, list)
+                or not all(isinstance(i, dict) for i in list_dictionaries)):
+            raise TypeError("list_dictionaries must be a list of dicts")
+        return json.dumps(list_dictionaries)
