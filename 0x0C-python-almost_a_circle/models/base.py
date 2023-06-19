@@ -3,6 +3,7 @@
 
 import json
 import csv
+import turtle
 
 
 class Base:
@@ -158,3 +159,23 @@ class Base:
             return []
         except Exception as err:
             raise err
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """draw all rectangles and squares into a turtle window
+
+        Args:
+            list_rectangles (list[Rectangle]): list of rectangle objects
+            list_squares (list[Square]): list of square objects"""
+        turtle.hideturtle()
+        for item in [*list_rectangles, *list_squares]:
+            w = item.size if hasattr(item, 'size') else item.width
+            h = item.size if hasattr(item, 'size') else item.height
+
+            turtle.up()
+            turtle.goto(item.x, item.y)
+            turtle.down()
+            for v in [w, h, w, h]:
+                turtle.fd(v)
+                turtle.rt(90)
+        turtle.done()
