@@ -58,7 +58,7 @@ class Base:
         return json.dumps(list_dictionaries)
 
     @staticmethod
-    def from_json_string(json_string) -> list[dict]:
+    def from_json_string(json_string):
         """loads dictionaries from json string
 
         Args:
@@ -118,7 +118,7 @@ class Base:
         of the same name of the class
 
         Args:
-            list_objs (list): list of objects that inheit from Base"""
+            list_objs (list): list of objects that inherit from Base"""
         objs = list_objs[:]
         header = None
         for i in range(len(objs)):
