@@ -88,7 +88,7 @@ class Base:
     def save_to_file(cls, list_objs):
         """Writes a list of objects that inherits from the Base class to a file
         of the same name of the class name"""
-        objs = list_objs[:]
+        objs = list_objs[:] if list_objs is not None else list()
         for i in range(len(objs)):
             item = objs[i]
             if isinstance(item, Base):
@@ -120,7 +120,7 @@ class Base:
 
         Args:
             list_objs (list): list of objects that inherit from Base"""
-        objs = list_objs[:]
+        objs = list_objs[:] if list_objs is not None else list()
         header = None
         for i in range(len(objs)):
             item = objs[i]
