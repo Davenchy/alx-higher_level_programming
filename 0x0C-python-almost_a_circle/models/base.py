@@ -26,7 +26,8 @@ class Base:
     @classmethod
     def create(cls, **dictionary):
         """Creates an instance with attributes defined in **dictionary"""
-        dummy = cls(*[1, 1])
+        config = {"Rectangle": [1, 1], "Square": [1]}
+        dummy = cls(*config[cls.__name__])
         dummy.update(**dictionary)
         return dummy
 
