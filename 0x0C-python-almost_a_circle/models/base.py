@@ -106,7 +106,7 @@ class Base:
             with open(cls.__name__ + ".json", "r") as file:
                 json_string = file.read()
             objs_list = Base.from_json_string(json_string)
-            return map(lambda d: cls.create(**d), objs_list)
+            return list(map(lambda d: cls.create(**d), objs_list))
         except FileNotFoundError:
             return []
         except Exception as err:
