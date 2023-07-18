@@ -1,3 +1,2 @@
--- show table description without using DESCRIBE statements
--- show table columns
+-- show the create table description
 SHOW CREATE TABLE first_table

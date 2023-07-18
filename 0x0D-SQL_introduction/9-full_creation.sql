@@ -1,5 +1,4 @@
--- creates a new table if only not exists and add some records
--- create the database only if not exists with fields: id, name and score
+-- create the table only if not exist with fields: id, name and score
 CREATE TABLE IF NOT EXISTS second_table (id INT, name VARCHAR(256), score INT);
 -- add John record
 INSERT INTO second_table VALUES (1, "John", 10);
