@@ -1,5 +1,5 @@
 -- List all shows that have at least one genre linked
-SELECT s.title, g.id as genre_id
+SELECT s.title, g.id AS genre_id
 FROM tv_show_genres sg
 	JOIN tv_shows s
 	JOIN tv_genres g
