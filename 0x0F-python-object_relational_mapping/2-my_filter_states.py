@@ -11,7 +11,7 @@ if __name__ == "__main__":
         user=args[0], passwd=args[1], db=args[2], port=3306)
     cur = conn.cursor()
     cur.execute(
-        "SELECT * FROM states WHERE name LIKE '{}' ORDER BY id ASC"
+        "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY id ASC"
         .format(args[3]))
     for state in cur.fetchall():
         print(state)
