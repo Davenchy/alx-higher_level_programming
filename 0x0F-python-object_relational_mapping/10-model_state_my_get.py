@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     try:
         state = session.query(State).filter(
-            State.name.regexp_match(sys.argv[4])).order_by(
+            State.name == sys.argv[4]).order_by(
             State.id).limit(1).one()
         print(state.id)
     except NoResultFound:
