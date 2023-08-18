@@ -7,10 +7,12 @@ import sys
 
 if __name__ == "__main__":
     args = sys.argv[1:5]
-    conn = MySQLdb.connect(user=args[0], passwd=args[1], db=args[2], port=3306)
+    conn = MySQLdb.connect(
+        user=args[0], passwd=args[1], db=args[2], port=3306)
     cur = conn.cursor()
     cur.execute(
-        "SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC", [args[3]])
+        "SELECT * FROM states WHERE name LIKE '{}' ORDER BY id ASC"
+        .format(args[3]))
     for state in cur.fetchall():
         print(state)
 
