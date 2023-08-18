@@ -10,7 +10,7 @@ if __name__ == "__main__":
     conn = MySQLdb.connect(user=args[0], passwd=args[1], db=args[2], port=3306)
     cur = conn.cursor()
     cur.execute(
-        f"SELECT * FROM states WHERE name LIKE '{args[3]}' ORDER BY id ASC")
+        f"SELECT * FROM states WHERE name LIKE {args[3]} ORDER BY id ASC")
     for state in cur.fetchall():
         print(state)
 
