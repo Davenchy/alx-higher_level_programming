@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""rename a state of id 2 to New Mexico 
+"""rename a state of id 2 to New Mexico
 """
 import sys
 from model_state import Base, State
