@@ -12,3 +12,6 @@ class State(Base):
     __tablename__ = 'states'
     id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False)
+
+    def __repr__(self):
+        return "State(id: {}, name: {})".format(self.id, self.name)
