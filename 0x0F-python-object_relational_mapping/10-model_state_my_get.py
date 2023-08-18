@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""List all States that have letter 'a' in their name from the database
+"""search and print the id of a state by name as an input
 """
 import sys
 from model_state import Base, State
