@@ -2,6 +2,7 @@
 """Print each state with cities belong to it"""
 import sys
 from relationship_state import Base, State
+from relationship_city import City
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
@@ -12,7 +13,7 @@ if __name__ == "__main__":
     Session = sessionmaker()
     session = Session(bind=engine)
 
-    states = session.query(State).order_by(State.id).all()
+    states = session.query(State).outerjoin.order_by(State.id, City.id).all()
 
     for state in states:
         print("{}: {}".format(state.id, state.name))
