@@ -24,12 +24,14 @@ def find_peak(list_of_integers):
     Returns:
         (int|None) The peak of the list of integers or None"""
 
-    peak = None
-    if list_of_integers is not None:
-        for n in list_of_integers:
-            if peak is None or n > peak:
-                peak = n
-    return peak
+    if list_of_integers is None:
+        return None
+
+    length = len(list_of_integers)
+    if length == 0:
+        return None
+
+    return max(list_of_integers)
 
 
 if __name__ == '__main__':
