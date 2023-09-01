@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-"""Script that sends a request and handles errors"""
+"""Script that fetches url and print json data with errors handling"""
 
 import requests
-from requests.exceptions import JSONDecodeError
 import sys
 
 
@@ -21,5 +20,5 @@ if __name__ == '__main__':
             print("No result")
         else:
             print("[{}] {}".format(_id, name))
-    except JSONDecodeError:
+    except requests.exceptions.JSONDecodeError:
         print("Not a valid JSON")
