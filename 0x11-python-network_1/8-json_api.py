@@ -12,13 +12,14 @@ if __name__ == '__main__':
     res = requests.post(url, data={'q': letter})
     try:
         json = res.json()
-
-        _id = json.get('id')
-        name = json.get('name')
-
-        if name is None or _id is None:
-            print("No result")
-        else:
-            print("[{}] {}".format(_id, name))
-    except requests.exceptions.JSONDecodeError:
+    except Exception:
         print("Not a valid JSON")
+        exit()
+
+    _id = json.get('id')
+    name = json.get('name')
+
+    if name is None or _id is None:
+        print("No result")
+    else:
+        print("[{}] {}".format(_id, name))
