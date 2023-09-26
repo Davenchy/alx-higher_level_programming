@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const request = require("request");
+const request = require('request');
 const baseUrl = process.argv[2];
 const userId = 18;
 
